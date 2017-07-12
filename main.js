@@ -29,8 +29,8 @@ function makeRequest (requestString) {
     return xhr;
   }
 
-function hasSubmitted () {
-  
+function hasSubmitted (to,from) {
+  makeRequest (Tfl.front+to+Tfl.mid+from+Tfl.end);
 }
 
 
