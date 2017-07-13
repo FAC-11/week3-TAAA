@@ -4,7 +4,7 @@ var Tfl = {
  front: "https://api.tfl.gov.uk/journey/journeyresults/",
  mid: "/to/",
  end: ""};
-
+var testTfl = "https://api.tfl.gov.uk/journey/journeyresults/1000003/to/1000139";
 // YOUTUBE VARIABLES
 
 // var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
@@ -22,6 +22,7 @@ function httpRequest(url, callback) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var responseObj = JSON.parse(xhr.responseText);
       callback(responseObj);
+
     }
   }
   xhr.open('GET', url, true);
@@ -31,10 +32,16 @@ function httpRequest(url, callback) {
 
 // TFL FUNCTIONALITY
 
-function processApiResponseTfl (respString) {
- var journeyStations = pickOutStations (resp);
- addStationTabsToDOM (journeyStations);
- makeYoutubeRquests (journeyStations);
+function tflExtractData (object) {
+  var result = [object.journeys[0].legs[0].departurePoint.commonName.replace(/Underground Station/,"")];
+  var journeyLegs = object.journeys[0].legs;
+  journeyLegs.forEach(function(el){
+    el.path.stopPoints.forEach(function(innerEl){
+      result.push(innerEl.name.replace(/Underground Station/,""));
+    });
+  })
+  // here we call the parallel function(result) - this will pass the array without needed to effect global variables
+
 }
 
 function hasSubmitted (to,from) {
@@ -84,7 +91,6 @@ function createYoutubeObject(obj) {
   return { url: url, thumbnail: thumbnail, title: title};
 }
 
-
 // return an array of youtube responseText objects
 
 function parallel(stationsArray, allLoadedFn) {
@@ -109,3 +115,7 @@ function parallel(stationsArray, allLoadedFn) {
   });
 
 }
+
+// this will be the first call from the DOM submit
+httpRequest(testTfl,tflExtractData);
+
