@@ -1,8 +1,15 @@
+// TFL VARIABLES
+
+var Tfl = {
+ front: "https://api.tfl.gov.uk/journey/journeyresults/",
+ mid: "/to/",
+ end: ""};
+
+// YOUTUBE VARIABLES
+
 var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
 
 // var createYoutubeNode = require('./DOM.js');
-
-var object;
 
 var youtubeWatchURL = 'https://www.youtube.com/watch?v=';
 
@@ -11,23 +18,34 @@ var youtubeResultsArray = [
 
 ];
 
+// HTTP REQUEST
+
 function httpRequest(url, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
       var responseObj = JSON.parse(xhr.responseText);
-      console.log(responseObj);
-      object = responseObj;
       callback(responseObj);
-      // var videoid = responseObj.items[0].id.videoId;
-
     }
   }
   xhr.open('GET', url, true);
   xhr.send();
+  return xhr;
 }
 
-httpRequest(youtubeURL);
+// TFL FUNCTIONALITY
+
+function processApiResponseTfl (respString) {
+ var journeyStations = pickOutStations (resp);
+ addStationTabsToDOM (journeyStations);
+ makeYoutubeRquests (journeyStations);
+}
+
+function hasSubmitted (to,from) {
+  httpRequest (Tfl.front+to+Tfl.mid+from+Tfl.end,processApiResponseTfl);
+}
+
+// YOUTUBE FUNCTIONALITY
 
 // creates a youtube link based on videoid
 function youtubeRenderURL(obj) {
@@ -48,3 +66,5 @@ function createYoutubeObject(obj) {
   var title = getYoutubeTitle(obj);
   return { url: url, thumbnail: thumbnail, title: title};
 }
+
+httpRequest(youtubeURL);
