@@ -41,7 +41,7 @@ function tflExtractData (object) {
     });
   })
   // here we call the parallel function(result) - this will pass the array without needed to effect global variables
-
+  parallel(result)
 }
 
 function hasSubmitted (to,from) {
@@ -93,7 +93,11 @@ function createYoutubeObject(obj) {
 
 // return an array of youtube responseText objects
 
-function parallel(stationsArray, allLoadedFn) {
+function addYoutubeResultsToDOM (results){
+  console.log(results)
+}
+
+function parallel(stationsArray) {
 
   // var count = 0;
   var remaining = stationsArray.length;
@@ -118,4 +122,3 @@ function parallel(stationsArray, allLoadedFn) {
 
 // this will be the first call from the DOM submit
 httpRequest(testTfl,tflExtractData);
-
