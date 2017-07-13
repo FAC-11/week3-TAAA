@@ -1,6 +1,6 @@
  var Tfl = {
-  front: "https://api.tfl.gov.uk/journey/journeyresults/"
-  mid: "/to/"
+  front: "https://api.tfl.gov.uk/journey/journeyresults/",
+  mid: "/to/", 
   end: ""};
 
 function populateMenu(menuToPopulate) {
@@ -16,15 +16,18 @@ function populateMenu(menuToPopulate) {
   })
 }
 
+function processApiResponseTfl (respString) {
+  var journeyStations = pickOutStations (resp);
+  addStationTabsToDOM (journeyStations);
+  makeYoutubeRquests (journeyStations);
+}
 
-function makeRequest (requestString) {
+function makeRequest (requestString, processApiResponseFn) {
   var xhr = XMLHttpRequest ();
     xhr.onreadystatechange = function() {
       if (xhr.readystate==4 && xhr.status==200) {
         var resp = JSON.parse (xhr.responseText);
-        var journeyStations = pickOutStations (resp);
-        addStationTabsToDOM (journeyStations);
-        makeYoutubeRquests (journeyStations);
+        processApiResponseFn (resp);
       }
     };
     xhr.open ('GET',requestString, true);
@@ -33,7 +36,7 @@ function makeRequest (requestString) {
   }
 
 function hasSubmitted (to,from) {
-  makeRequest (Tfl.front+to+Tfl.mid+from+Tfl.end);
+  makeRequest (Tfl.front+to+Tfl.mid+from+Tfl.end,processApiResponseTfl);
 }
 
 
