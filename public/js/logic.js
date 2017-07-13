@@ -91,7 +91,7 @@ function parallel(stationsArray, allLoadedFn) {
 
   // var count = 0;
   var remaining = stationsArray.length;
-  var requestObjects = [];
+  var requestObjects = [];  // currently unutilised - this is for future error testing, so we store the request    //  objects we'd made
   var youtubeResponseObjects = [];
 
   stationsArray.forEach(function(stationName, index) {
