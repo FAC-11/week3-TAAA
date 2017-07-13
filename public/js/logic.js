@@ -40,7 +40,7 @@ function tflExtractData (object) {
     });
   })
   // here we call the parallel function(result) - this will pass the array without needed to effect global variables
-
+  parallel(result)
 }
 
 function hasSubmitted (to,from) {
@@ -104,7 +104,11 @@ function addStationNameToYoutubeObj (youtubeResultsArray, stationNamesArray) {
   return youtubeResultsArray;
 }
 
-function parallel(stationsArray, allLoadedFn) {
+function addYoutubeResultsToDOM (results){
+  console.log(results)
+}
+
+function parallel(stationsArray) {
 
   // var count = 0;
   var remaining = stationsArray.length;
