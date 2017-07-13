@@ -7,10 +7,6 @@ var Tfl = {
 var testTfl = "https://api.tfl.gov.uk/journey/journeyresults/1000003/to/1000139";
 // YOUTUBE VARIABLES
 
-// var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
-
-// var createYoutubeNode = require('./DOM.js');
-
 var youtubeWatchURL = 'https://www.youtube.com/watch?v=';
 
 // HTTP REQUEST
@@ -44,7 +40,7 @@ function tflExtractData (object) {
 }
 
 function hasSubmitted (to,from) {
-  httpRequest (Tfl.front+to+Tfl.mid+from+Tfl.end,processApiResponseTfl);
+  httpRequest (Tfl.front+to+Tfl.mid+from+Tfl.end, tflExtractData);
 }
 
 // YOUTUBE FUNCTIONALITY
@@ -61,8 +57,6 @@ function getYoutubeThumbnail(obj) {
 function getYoutubeTitle(obj) {
   return obj.items[0].snippet.title;
 }
-
-// var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
 
 var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=';
 
@@ -96,6 +90,7 @@ function createYoutubeObject(obj) {
 }
 
 // return an array of youtube responseText objects
+
 function addStationNameToYoutubeObj (youtubeResultsArray, stationNamesArray) {
   for (var i = 0; i < youtubeResultsArray.length; i++) {
     youtubeResultsArray[i].stationName = stationNamesArray[i];
@@ -131,6 +126,7 @@ function parallel(stationsArray) {
 
 }
 
+
 function addYoutubeResultsToDOM(results) {
   console.log(results);
   stationNamesArray = [];
@@ -138,3 +134,4 @@ function addYoutubeResultsToDOM(results) {
 
 // this will be the first call from the DOM submit
 httpRequest(testTfl,tflExtractData);
+
