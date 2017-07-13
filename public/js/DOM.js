@@ -23,7 +23,7 @@ function addYoutubeResultsToDOM(resultsArray){
     var listItem = document.createElement('li');
     var listHeading = document.createElement('h3');
     //to be updated with station name value
-    listHeading.textContent = "station name";
+    listHeading.textContent = obj.stationName;
     listItem.appendChild(listHeading);
     var listaTag = document.createElement('a');
     var listImage = document.createElement('img');
