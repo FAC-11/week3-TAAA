@@ -107,7 +107,6 @@ function parallel(stationsArray) {
         // an array of objects to hold youtube info
         // - will contain title; thumbnail; url
         var youtubeResultsArray = processYoutubeResponseOjects (youtubeResponseObjects);
-        console.log(youtubeResultsArray);
         addYoutubeResultsToDOM (youtubeResultsArray);
       }
     }));
