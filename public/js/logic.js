@@ -104,10 +104,6 @@ function addStationNameToYoutubeObj (youtubeResultsArray, stationNamesArray) {
   return youtubeResultsArray;
 }
 
-function addYoutubeResultsToDOM (results){
-  console.log(results)
-}
-
 function parallel(stationsArray) {
 
   // var count = 0;
@@ -128,9 +124,7 @@ function parallel(stationsArray) {
         var youtubeResultsArray = processYoutubeResponseObjects (youtubeResponseObjects);
 
         // call a function that will attach the station names to the youtubeResponseObjects
-        console.log(youtubeResultsArray);
         addYoutubeResultsToDOM (addStationNameToYoutubeObj(youtubeResultsArray, stationNamesArray));
-
       }
     }));
   });
