@@ -13,10 +13,6 @@ var Tfl = {
 
 var youtubeWatchURL = 'https://www.youtube.com/watch?v=';
 
-// an array of objects to hold youtube info
-var youtubeResultsArray = [
-
-];
 
 // HTTP REQUEST
 
@@ -66,16 +62,19 @@ var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxR
 
 var youtubeAPIKey = '&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
 
-var youtubeResponseObjects = [];
 
 // will replace spaces with '+'
 function searchQuery(stationName) {
   return stationName.replace(/\s/g, '+');
 }
 
-// will push the responseText objects into youtubeResponseObjects
-function processApiResponseYoutube(obj) {
-  console.log(obj);
+// will convert youtube ResponseText object array into youtubeResultsArray
+function processYoutubeResponseOjects (reponseArray) {
+  result = [];
+  reponseArray.forEach (function (el) {
+    result.push(createYoutubeObject (el));
+  });
+  return (result);
 }
 
 function createYoutubeObject(obj) {
@@ -86,23 +85,27 @@ function createYoutubeObject(obj) {
 }
 
 
-
 // return an array of youtube responseText objects
-function parallel(stationsArray) {
+
+function parallel(stationsArray, allLoadedFn) {
+
   // var count = 0;
   var remaining = stationsArray.length;
   var requestObjects = [];
-
+  var youtubeResponseObjects = [];
 
   stationsArray.forEach(function(stationName, index) {
     var url = youtubeURL + searchQuery(stationName) + youtubeAPIKey;
     requestObjects.push(httpRequest(url, function(obj) {
-
       youtubeResponseObjects[index] = obj;
-
-
-
+      remaining-- ;
+      if (!remaining) {
+        // an array of objects to hold youtube info
+        // - will contain title; thumbnail; url
+        var youtubeResultsArray = processYoutubeResponseOjects (youtubeResponseObjects);
+        addYoutubeResultsToDOM (youtubeResultsArray);
+      }
     }));
-  })
+  });
 
 }
