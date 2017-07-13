@@ -34,16 +34,11 @@ function httpRequest(url, callback) {
   }
   xhr.open('GET', url, true);
   xhr.send();
-  // return xhr;
+  return xhr;
 }
 
 // TFL FUNCTIONALITY
 
-// function processApiResponseTfl (respString) {
-//  var journeyStations = pickOutStations (resp);
-//  addStationTabsToDOM (journeyStations);
-//  makeYoutubeRquests (journeyStations);
-// }
 function tflExtractData (object) {
   var result = [object.journeys[0].legs[0].departurePoint.commonName.replace(/Underground Station/,"")];
   var journeyLegs = object.journeys[0].legs;
@@ -52,10 +47,8 @@ function tflExtractData (object) {
       result.push(innerEl.name.replace(/Underground Station/,""));
     });
   })
-  update(stationNames, result);
-}
-function update(oldArray, newArray){
-  oldArray = newArray;
+  stationNames = result;
+  // here we call the parallel function(result) - this will pass the array without needed to effect global variables
 
 }
 
@@ -86,6 +79,6 @@ function createYoutubeObject(obj) {
 }
 
 httpRequest(testTfl,tflExtractData);
-console.log(stationNames);
+
 
 // hasSubmitted();
