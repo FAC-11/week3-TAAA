@@ -22,6 +22,9 @@ function makeRequest (requestString) {
     xhr.onreadystatechange = function() {
       if (xhr.readystate==4 && xhr.status==200) {
         var resp = JSON.parse (xhr.responseText);
+        var journeyStations = pickOutStations (resp);
+        addStationTabsToDOM (journeyStations);
+        makeYoutubeRquests (journeyStations);
       }
     };
     xhr.open ('GET',requestString, true);
