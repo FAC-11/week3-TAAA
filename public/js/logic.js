@@ -59,8 +59,6 @@ function getYoutubeTitle(obj) {
   return obj.items[0].snippet.title;
 }
 
-// var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
-
 var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=';
 
 var youtubeAPIKey = '&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
@@ -88,10 +86,6 @@ function createYoutubeObject(obj) {
 }
 
 // return an array of youtube responseText objects
-
-function addYoutubeResultsToDOM (results){
-  console.log(results)
-}
 
 function parallel(stationsArray) {
 
