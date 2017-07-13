@@ -7,8 +7,6 @@ var Tfl = {
 var testTfl = "https://api.tfl.gov.uk/journey/journeyresults/1000003/to/1000139";
 // YOUTUBE VARIABLES
 
-// var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
-
 var youtubeWatchURL = 'https://www.youtube.com/watch?v=';
 
 
@@ -43,7 +41,7 @@ function tflExtractData (object) {
 }
 
 function hasSubmitted (to,from) {
-  httpRequest (Tfl.front+to+Tfl.mid+from+Tfl.end,processApiResponseTfl);
+  httpRequest (Tfl.front+to+Tfl.mid+from+Tfl.end, tflExtractData);
 }
 
 // YOUTUBE FUNCTIONALITY
@@ -60,8 +58,6 @@ function getYoutubeThumbnail(obj) {
 function getYoutubeTitle(obj) {
   return obj.items[0].snippet.title;
 }
-
-// var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
 
 var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=';
 
@@ -113,6 +109,3 @@ function parallel(stationsArray) {
   });
 
 }
-
-// this will be the first call from the DOM submit
-httpRequest(testTfl,tflExtractData);

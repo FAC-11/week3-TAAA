@@ -40,3 +40,15 @@ function addYoutubeResultsToDOM(resultsArray){
 
 populateMenu("starting-station");
 populateMenu("destination-station");
+
+var submitButton = document.getElementById("submit");
+submit.addEventListener ('click', function(ev) {
+  ev.preventDefault();
+  var startStation = document.getElementById("starting-station").value;
+  var destination = document.getElementById("destination-station").value;
+  if (startStation != destination)
+    hasSubmitted (startStation,destination);
+  else {
+    console.log("You're already there.")
+  }
+});
