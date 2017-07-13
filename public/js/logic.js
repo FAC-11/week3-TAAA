@@ -13,7 +13,6 @@ var testTfl = "https://api.tfl.gov.uk/journey/journeyresults/1000003/to/1000139"
 
 var youtubeWatchURL = 'https://www.youtube.com/watch?v=';
 
-
 // HTTP REQUEST
 
 function httpRequest(url, callback) {
@@ -69,20 +68,25 @@ var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxR
 
 var youtubeAPIKey = '&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
 
+var stationNamesArray = [];
+
+
 
 // will replace spaces with '+'
 function searchQuery(stationName) {
+  stationNamesArray.push(stationName);
   return stationName.replace(/\s/g, '+');
 }
 
 // will convert youtube ResponseText object array into youtubeResultsArray
-function processYoutubeResponseOjects (reponseArray) {
+function processYoutubeResponseObjects (reponseArray) {
   result = [];
   reponseArray.forEach (function (el) {
     result.push(createYoutubeObject (el));
   });
   return (result);
 }
+
 
 function createYoutubeObject(obj) {
   var url = youtubeRenderURL(obj);
@@ -92,6 +96,13 @@ function createYoutubeObject(obj) {
 }
 
 // return an array of youtube responseText objects
+function addStationNameToYoutubeObj (youtubeResultsArray, stationNamesArray) {
+  for (var i = 0; i < youtubeResultsArray.length; i++) {
+    youtubeResultsArray[i].stationName = stationNamesArray[i];
+  }
+  // console.log(youtubeResultsArray);
+  return youtubeResultsArray;
+}
 
 function parallel(stationsArray, allLoadedFn) {
 
@@ -99,23 +110,33 @@ function parallel(stationsArray, allLoadedFn) {
   var remaining = stationsArray.length;
   var requestObjects = [];  // currently unutilised - this is for future error testing, so we store the request    //  objects we'd made
   var youtubeResponseObjects = [];
+  var stationNamesArray = [];
 
   stationsArray.forEach(function(stationName, index) {
     var url = youtubeURL + searchQuery(stationName) + youtubeAPIKey;
+    stationNamesArray.push(stationName);
     requestObjects.push(httpRequest(url, function(obj) {
       youtubeResponseObjects[index] = obj;
       remaining-- ;
       if (!remaining) {
         // an array of objects to hold youtube info
         // - will contain title; thumbnail; url
-        var youtubeResultsArray = processYoutubeResponseOjects (youtubeResponseObjects);
-        addYoutubeResultsToDOM (youtubeResultsArray);
+        var youtubeResultsArray = processYoutubeResponseObjects (youtubeResponseObjects);
+
+        // call a function that will attach the station names to the youtubeResponseObjects
+        console.log(youtubeResultsArray);
+        addYoutubeResultsToDOM (addStationNameToYoutubeObj(youtubeResultsArray, stationNamesArray));
+
       }
     }));
   });
 
 }
 
+function addYoutubeResultsToDOM(results) {
+  console.log(results);
+  stationNamesArray = [];
+}
+
 // this will be the first call from the DOM submit
 httpRequest(testTfl,tflExtractData);
-
