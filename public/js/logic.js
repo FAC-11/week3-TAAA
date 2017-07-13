@@ -7,7 +7,7 @@ var Tfl = {
 
 // YOUTUBE VARIABLES
 
-var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
+// var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
 
 // var createYoutubeNode = require('./DOM.js');
 
@@ -60,6 +60,24 @@ function getYoutubeTitle(obj) {
   return obj.items[0].snippet.title;
 }
 
+// var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
+
+var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=';
+
+var youtubeAPIKey = '&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
+
+var youtubeResponseObjects = [];
+
+// will replace spaces with '+'
+function searchQuery(stationName) {
+  return stationName.replace(/\s/g, '+');
+}
+
+// will push the responseText objects into youtubeResponseObjects
+function processApiResponseYoutube(obj) {
+  console.log(obj);
+}
+
 function createYoutubeObject(obj) {
   var url = youtubeRenderURL(obj);
   var thumbnail = getYoutubeThumbnail(obj);
@@ -67,4 +85,24 @@ function createYoutubeObject(obj) {
   return { url: url, thumbnail: thumbnail, title: title};
 }
 
-httpRequest(youtubeURL);
+
+
+// return an array of youtube responseText objects
+function parallel(stationsArray) {
+  // var count = 0;
+  var remaining = stationsArray.length;
+  var requestObjects = [];
+
+
+  stationsArray.forEach(function(stationName, index) {
+    var url = youtubeURL + searchQuery(stationName) + youtubeAPIKey;
+    requestObjects.push(httpRequest(url, function(obj) {
+
+      youtubeResponseObjects[index] = obj;
+
+
+
+    }));
+  })
+
+}
