@@ -9,8 +9,6 @@ var testTfl = "https://api.tfl.gov.uk/journey/journeyresults/1000003/to/1000139"
 
 // var youtubeURL = 'https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=25&q=baker+street&key=AIzaSyAfqyA0VtNHaSa3PAVzCzBp6TuKR3tFwms';
 
-// var createYoutubeNode = require('./DOM.js');
-
 var youtubeWatchURL = 'https://www.youtube.com/watch?v=';
 
 
@@ -92,10 +90,6 @@ function createYoutubeObject(obj) {
 }
 
 // return an array of youtube responseText objects
-
-function addYoutubeResultsToDOM (results){
-  console.log(results)
-}
 
 function parallel(stationsArray) {
 
