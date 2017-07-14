@@ -1,0 +1,13 @@
+form legend {
+  font-family: Pacifico;
+  font-size:1.6rem;
+  margin: 0 auto
+}
+
+li h3, a{
+  font-family: Droid Sans;
+}
+
+li {
+    list-style-type: none;
+}
