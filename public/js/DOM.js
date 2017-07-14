@@ -34,6 +34,7 @@ function addYoutubeResultsToDOM(resultsArray){
     var listImage = document.createElement('img');
     listImage.src = obj.thumbnail;
     listaTag.setAttribute('href',obj.url);
+    listaTag.setAttribute('target','_blank');
     listaTag.textContent = obj.title;
     listItem.appendChild(listaTag);
     listaTag.prepend(listImage);
