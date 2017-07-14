@@ -17,8 +17,13 @@ var availableStations = Object.assign({}, stationObj);
 
 //populating youtube results to the DOM
 function addYoutubeResultsToDOM(resultsArray){
+  var elementExists = document.getElementById("exists");
+  if (elementExists){
+    elementExists.parentNode.removeChild(elementExists);
+  }
   var resultSection = document.getElementById("result-section");
   var list = document.createElement('ul');
+  list.setAttribute('id', 'exists');
   resultsArray.forEach(function(obj){
     var listItem = document.createElement('li');
     var listHeading = document.createElement('h3');
