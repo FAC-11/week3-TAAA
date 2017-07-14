@@ -17,10 +17,11 @@ var availableStations = Object.assign({}, stationObj);
 
 //populating youtube results to the DOM
 function addYoutubeResultsToDOM(resultsArray){
-  var elementExists = document.getElementById("results-on-page");
-  if (elementExists){
-    elementExists.parentNode.removeChild(elementExists);
-  }
+  removeResultsOnPage();
+  // var elementExists = document.getElementById("results-on-page");
+  // if (elementExists){
+  //   elementExists.parentNode.removeChild(elementExists);
+  // }
   var resultSection = document.getElementById("result-section");
   var list = document.createElement('ul');
   list.setAttribute('id', 'results-on-page');
@@ -43,6 +44,21 @@ function addYoutubeResultsToDOM(resultsArray){
   resultSection.appendChild(list);
 }
 
+function removeResultsOnPage() {
+  var elementExists = document.getElementById("results-on-page");
+  if (elementExists){
+    elementExists.parentNode.removeChild(elementExists);
+  }
+}
+
+function domSameStationMessage() {
+  removeResultsOnPage();
+  var errorHeading = document.createElement('h3');
+  errorHeading.setAttribute('id', 'results-on-page');
+  errorHeading.textContent = "You're already there.";
+  document.getElementById('result-section').appendChild(errorHeading);
+}
+
 populateMenu("starting-station");
 populateMenu("destination-station");
 
@@ -54,6 +70,8 @@ submit.addEventListener ('click', function(ev) {
   if (startStation != destination)
     hasSubmitted (startStation,destination);
   else {
+    // append message to the DOM
+    domSameStationMessage();
     console.log("You're already there.")
   }
 });
