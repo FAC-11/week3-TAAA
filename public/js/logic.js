@@ -29,15 +29,15 @@ function httpRequest(url, callback) {
 // TFL FUNCTIONALITY
 
 function tflExtractData (object) {
-  var result = [object.journeys[0].legs[0].departurePoint.commonName.replace(/Underground Station/,"")];
+  var tflResultsArray = [object.journeys[0].legs[0].departurePoint.commonName.replace(/Underground Station/,"")];
   var journeyLegs = object.journeys[0].legs;
   journeyLegs.forEach(function(el){
     el.path.stopPoints.forEach(function(innerEl){
-      result.push(innerEl.name.replace(/Underground Station/,""));
+      tflResultsArray.push(innerEl.name.replace(/Underground Station/,""));
     });
   })
   // here we call the parallel function(result) - this will pass the array without needed to effect global variables
-  parallel(result)
+  getYoutubeResultsInParallel(tflResultsArray);
 }
 
 function hasSubmitted (to,from) {
@@ -87,7 +87,7 @@ function createYoutubeObject(obj) {
 
 // return an array of youtube responseText objects
 
-function parallel(stationsArray) {
+function getYoutubeResultsInParallel(stationsArray) {
 
   // var count = 0;
   var remaining = stationsArray.length;
