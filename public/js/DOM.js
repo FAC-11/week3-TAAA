@@ -17,13 +17,13 @@ var availableStations = Object.assign({}, stationObj);
 
 //populating youtube results to the DOM
 function addYoutubeResultsToDOM(resultsArray){
-  var elementExists = document.getElementById("exists");
+  var elementExists = document.getElementById("results-on-page");
   if (elementExists){
     elementExists.parentNode.removeChild(elementExists);
   }
   var resultSection = document.getElementById("result-section");
   var list = document.createElement('ul');
-  list.setAttribute('id', 'exists');
+  list.setAttribute('id', 'results-on-page');
   resultsArray.forEach(function(obj){
     var listItem = document.createElement('li');
     var listHeading = document.createElement('h3');
