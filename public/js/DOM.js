@@ -17,18 +17,25 @@ var availableStations = Object.assign({}, stationObj);
 
 //populating youtube results to the DOM
 function addYoutubeResultsToDOM(resultsArray){
+  removeResultsOnPage();
+  // var elementExists = document.getElementById("results-on-page");
+  // if (elementExists){
+  //   elementExists.parentNode.removeChild(elementExists);
+  // }
   var resultSection = document.getElementById("result-section");
   var list = document.createElement('ul');
+  list.setAttribute('id', 'results-on-page');
   resultsArray.forEach(function(obj){
     var listItem = document.createElement('li');
     var listHeading = document.createElement('h3');
     //to be updated with station name value
-    listHeading.textContent = "station name";
+    listHeading.textContent = obj.stationName;
     listItem.appendChild(listHeading);
     var listaTag = document.createElement('a');
     var listImage = document.createElement('img');
     listImage.src = obj.thumbnail;
     listaTag.setAttribute('href',obj.url);
+    listaTag.setAttribute('target','_blank');
     listaTag.textContent = obj.title;
     listItem.appendChild(listaTag);
     listaTag.prepend(listImage);
@@ -36,6 +43,21 @@ function addYoutubeResultsToDOM(resultsArray){
     list.appendChild(listItem);
   })
   resultSection.appendChild(list);
+}
+
+function removeResultsOnPage() {
+  var elementExists = document.getElementById("results-on-page");
+  if (elementExists){
+    elementExists.parentNode.removeChild(elementExists);
+  }
+}
+
+function domSameStationMessage() {
+  removeResultsOnPage();
+  var errorHeading = document.createElement('h3');
+  errorHeading.setAttribute('id', 'results-on-page');
+  errorHeading.textContent = "You're already there.";
+  document.getElementById('result-section').appendChild(errorHeading);
 }
 
 populateMenu("starting-station");
@@ -49,6 +71,8 @@ submit.addEventListener ('click', function(ev) {
   if (startStation != destination)
     hasSubmitted (startStation,destination);
   else {
+    // append message to the DOM
+    domSameStationMessage();
     console.log("You're already there.")
   }
 });
